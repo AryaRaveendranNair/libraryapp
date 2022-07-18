@@ -4,7 +4,6 @@ const cors = require("cors");
 const jwt = require("jsonwebtoken")
 const path = require('path');
 const PORT = process.env.PORT || 3000
-
 const bookdata = require("./src/Models/BooksModel")
 const userdata = require("./src/Models/UserModel")
 
@@ -193,9 +192,12 @@ app.post("/api/login" , (req,res)=>{
  }
 })
 
+
 app.get('/*', function (req,res){
     res.sendFile(path.join(__dirname + '/dist/front-end/index.html'));
   })
+
+
 
 app.listen( PORT , (req,res)=>{
     console.log(`Server Running on PORT ${PORT}`)
