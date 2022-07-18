@@ -11,7 +11,6 @@ const userdata = require("./src/Models/UserModel")
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
 app.use(express.static('./dist/front-end'));
 
 // Middleware Fuction to verify Token send from FrontEnd
@@ -37,13 +36,13 @@ function verifyToken(req,res,next){
    }
 
 
-app.get("/" , (req,res)=>{
+app.get("/api" , (req,res)=>{
     res.send(`Server Running on PORT ${PORT}`)
 });
 
 
 //Get Book
-app.get("api/books" ,verifyToken, (req,res)=>{
+app.get("/api/books" ,verifyToken, (req,res)=>{
 
  res.header("Access-Control-Allow-Origin", "*");
  res.header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
@@ -56,7 +55,7 @@ app.get("api/books" ,verifyToken, (req,res)=>{
 });
 
 //Post Book
-app.post("api/add" ,verifyToken, (req,res)=>{
+app.post("/api/add" ,verifyToken, (req,res)=>{
 
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
@@ -81,7 +80,7 @@ app.post("api/add" ,verifyToken, (req,res)=>{
 });
 
 //Delete Book
-app.delete("api/delete/:id" ,verifyToken, (req,res)=>{
+app.delete("/api/delete/:id" ,verifyToken, (req,res)=>{
 
     id = req.params.id;
     console.log(id)
@@ -94,7 +93,7 @@ bookdata.findByIdAndDelete({"_id":id})
 });
 
 //Get Book details for Update Form
-app.get("api/:id" , (req,res)=>{
+app.get("/api/:id" , (req,res)=>{
     let id = req.params.id
 
     bookdata.findOne({"_id":id})
@@ -105,7 +104,7 @@ app.get("api/:id" , (req,res)=>{
 })
 
 //Update Book
-app.put("api/update" ,verifyToken, (req,res)=>{
+app.put("/api/update" ,verifyToken, (req,res)=>{
 
     console.log(req.body)
 
@@ -141,7 +140,7 @@ app.put("api/update" ,verifyToken, (req,res)=>{
 
 //Signup User
 
-app.post("api/adduser" , (req,res)=>{
+app.post("/api/adduser" , (req,res)=>{
 
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
@@ -164,7 +163,7 @@ app.post("api/adduser" , (req,res)=>{
 
 
 //Login User
-app.post("api/login" , (req,res)=>{
+app.post("/api/login" , (req,res)=>{
    
     let logindata = req.body;
     console.log(logindata.data.username)
@@ -194,9 +193,9 @@ app.post("api/login" , (req,res)=>{
  }
 })
 
-app.get('/*', function(req, res) {
+app.get('/*', function (req,res){
     res.sendFile(path.join(__dirname + '/dist/front-end/index.html'));
-   });
+  })
 
 app.listen( PORT , (req,res)=>{
     console.log(`Server Running on PORT ${PORT}`)
