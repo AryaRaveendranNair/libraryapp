@@ -35,7 +35,7 @@ function verifyToken(req,res,next){
    }
 
 
-app.get("/api" , (req,res)=>{
+app.get("/" , (req,res)=>{
     res.send(`Server Running on PORT ${PORT}`)
 });
 
